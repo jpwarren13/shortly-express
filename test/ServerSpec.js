@@ -23,8 +23,8 @@ describe('', function() {
   var server;
 
   before(function() {
-    server = app.listen(4568, function() {
-      console.log('Shortly is listening on 4568');
+    server = app.listen(4569, function() {
+      console.log('Shortly is listening on 456');
     });
   });
 

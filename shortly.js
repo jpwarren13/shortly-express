@@ -12,7 +12,8 @@ var Link = require('./app/models/link');
 var Click = require('./app/models/click');
 
 var app = express();
-
+debugger;
+ 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(partials());
