@@ -66,6 +66,7 @@ app.post('/links',
             baseUrl: req.headers.origin
           })
             .then(function(newLink) {
+              console.log('in shortly.js, link.create:', newLink);
               res.status(200).send(newLink);
             });
         });
@@ -77,7 +78,60 @@ app.post('/links',
 // Write your authentication routes here
 /************************************************************/
 
+//app.get('/login', function(req, res) {
+//  // serve up the login page
+// res.render('login');
+//});
 
+app.get('/signup', function(req, res) {
+  // go to signup route?
+  res.render('signup');
+});
+
+//app.post('/login', function(req, res) {
+//  // do the login
+// });
+
+app.post('/signup', function(req, res) {
+  console.log('shortly.js app.post req.body:', req.body);
+  const username = req.body.username;
+  const password = req.body.password;
+  // Do validation here?
+  // if (!util.isValidUrl(uri)) {
+  //   console.log('Not a valid url: ', uri);
+  //   return res.sendStatus(404);
+  // }
+
+  new User({ username, password }).fetch().then(function(found) {
+    if (found) {
+      // call login function with given username and password
+      //res.status(200).send(found.attributes);
+    } else {
+      // create entry for user
+      // use bcrypt to hash password and enter with user
+
+      // util.getUrlTitle(uri, function(err, title) {
+      //   if (err) {
+      //     console.log('Error reading URL heading: ', err);
+      //     return res.sendStatus(404);
+      //   }
+
+      Users.create({
+        username: username,
+        password: password
+      })
+        .then(function(newUser) {
+          console.log('shortly.js new User:', newUser);
+          //redirect to the users link/page
+          //render links by the user.
+          res.status(200).send(newUser);
+        });
+    }
+  });
+
+
+// do the signup
+});
 
 /************************************************************/
 // Handle the wildcard route last - if all other routes fail
