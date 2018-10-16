@@ -12,7 +12,7 @@ var Link = require('./app/models/link');
 var Click = require('./app/models/click');
 
 var app = express();
-debugger;
+
  
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -78,29 +78,52 @@ app.post('/links',
 // Write your authentication routes here
 /************************************************************/
 
-//app.get('/login', function(req, res) {
-//  // serve up the login page
-// res.render('login');
-//});
+app.get('/login', function(req, res) {
+  // serve up the login page
+  res.render('login');
+});
 
 app.get('/signup', function(req, res) {
   // go to signup route?
   res.render('signup');
 });
 
-//app.post('/login', function(req, res) {
-//  // do the login
-// });
+app.post('/login', function(req, res) {
+  console.log('app.post/login: ', req.body);
+
+  // new User(req.body).fetch().then(function(user) {
+  //   debugger;
+  //   if (!user) {
+  //     res.redirect('/login');
+  //   } else {
+  //     // we are logged in (?)
+  //   }
+  // });
+ 
+  var username = req.body.username;
+  var password = req.body.password;
+ 
+  if (username === 'demo' && password === 'demo') {
+     res.redirect('/index');
+//     req.session.regenerate(function() {
+//       req.session.user = username;
+//       res.redirect('/index');
+//     });
+  } else {
+    res.redirect('/login');
+  }     
+
+
+  // connect to database to verify username and password exists
+  // if not wrong password prompt
+  //If username doesn't exist go to signup page
+  // If it exists then go to users links page.
+});
 
 app.post('/signup', function(req, res) {
-  console.log('shortly.js app.post req.body:', req.body);
+  console.log('** shortly.js app.post req.body:', req.body);
   const username = req.body.username;
   const password = req.body.password;
-  // Do validation here?
-  // if (!util.isValidUrl(uri)) {
-  //   console.log('Not a valid url: ', uri);
-  //   return res.sendStatus(404);
-  // }
 
   new User({ username, password }).fetch().then(function(found) {
     if (found) {
@@ -110,21 +133,15 @@ app.post('/signup', function(req, res) {
       // create entry for user
       // use bcrypt to hash password and enter with user
 
-      // util.getUrlTitle(uri, function(err, title) {
-      //   if (err) {
-      //     console.log('Error reading URL heading: ', err);
-      //     return res.sendStatus(404);
-      //   }
-
       Users.create({
         username: username,
         password: password
       })
         .then(function(newUser) {
-          console.log('shortly.js new User:', newUser);
+          console.log('*** shortly.js new User:', newUser);
           //redirect to the users link/page
           //render links by the user.
-          res.status(200).send(newUser);
+          res.status(201).send(newUser);
         });
     }
   });
