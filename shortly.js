@@ -104,11 +104,11 @@ app.post('/login', function(req, res) {
   var password = req.body.password;
  
   if (username === 'demo' && password === 'demo') {
-     res.redirect('/index');
-//     req.session.regenerate(function() {
-//       req.session.user = username;
-//       res.redirect('/index');
-//     });
+    res.redirect('/index');
+    //     req.session.regenerate(function() {
+    //       req.session.user = username;
+    //       res.redirect('/index');
+    //     });
   } else {
     res.redirect('/login');
   }     
