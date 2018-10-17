@@ -37,18 +37,18 @@ app.use(session({
 }));
 
 app.get('/', util.checkUser, function(req, res) {
-  console.log("*** app.get(/)", req);
+  console.log('*** app.get(/)', req);
   res.render('index');
 });
 
 app.get('/create', util.checkUser, function(req, res) {
-  console.log("*** app.get(/create)", req);
+  console.log('*** app.get(/create)', req);
   res.render('index');
 });
 
 app.get('/links', util.checkUser,
-function(req, res) {
-    console.log("*** app.get(/links)", req);
+  function(req, res) {
+    console.log('*** app.get(/links)', req);
     Links.reset().fetch().then(function(links) {
       res.status(200).send(links.models);
     });
@@ -145,9 +145,11 @@ app.post('/signup', function(req, res) {
   new User({ username: username })
     .fetch()
     .then(function(user) {
+      console.log('**** app.post/signup new user:', user);
       if (!user) {
         // create entry for user
-        User.create({ 
+        console.log('**** app.post/signup user.create', user);
+        Users.create({ 
           username: username, 
           password: password
         })
